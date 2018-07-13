@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,16 +25,52 @@
                                     <action selector="remoteNotificationsAuthorization:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XT8-td-bXE"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-eq-wI4">
+                                <rect key="frame" x="77" y="356" width="220" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="sendButton"/>
+                                <state key="normal" title="Send notification"/>
+                                <connections>
+                                    <action selector="sendNotificationTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Urm-vJ-f25"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbT-hV-rO4">
+                                <rect key="frame" x="77" y="394" width="220" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="sendWithoutCategoryButton"/>
+                                <state key="normal" title="Send Without Category"/>
+                                <connections>
+                                    <action selector="sendNotificationWithoutCategoryTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W4W-3h-iem"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bh9-bV-k4i">
+                                <rect key="frame" x="77" y="432" width="220" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="sendInputButton"/>
+                                <state key="normal" title="Send With Input"/>
+                                <connections>
+                                    <action selector="sendInputNotificationTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tu2-ZN-qia"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96862745100000003" green="0.79215686269999996" blue="0.094117647060000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Bh9-bV-k4i" firstAttribute="top" secondItem="pbT-hV-rO4" secondAttribute="bottom" constant="8" symbolic="YES" id="8LA-7t-mcd"/>
+                            <constraint firstItem="pbT-hV-rO4" firstAttribute="top" secondItem="nAF-eq-wI4" secondAttribute="bottom" constant="8" symbolic="YES" id="DKH-fR-24m"/>
+                            <constraint firstItem="pbT-hV-rO4" firstAttribute="leading" secondItem="nAF-eq-wI4" secondAttribute="leading" id="KvR-GS-eK0"/>
+                            <constraint firstItem="Bh9-bV-k4i" firstAttribute="trailing" secondItem="pbT-hV-rO4" secondAttribute="trailing" id="Ouq-Hf-Qz3"/>
+                            <constraint firstItem="nAF-eq-wI4" firstAttribute="trailing" secondItem="wKA-DV-Q2w" secondAttribute="trailing" id="TMs-tQ-FP1"/>
                             <constraint firstItem="wKA-DV-Q2w" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="WoQ-41-ukA"/>
+                            <constraint firstItem="nAF-eq-wI4" firstAttribute="top" secondItem="wKA-DV-Q2w" secondAttribute="bottom" constant="8" symbolic="YES" id="ZdF-t3-CFx"/>
                             <constraint firstItem="wKA-DV-Q2w" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aS6-9M-sUZ"/>
+                            <constraint firstItem="nAF-eq-wI4" firstAttribute="leading" secondItem="wKA-DV-Q2w" secondAttribute="leading" id="cwL-bI-x1x"/>
+                            <constraint firstItem="Bh9-bV-k4i" firstAttribute="leading" secondItem="pbT-hV-rO4" secondAttribute="leading" id="xhB-fi-m9C"/>
+                            <constraint firstItem="pbT-hV-rO4" firstAttribute="trailing" secondItem="nAF-eq-wI4" secondAttribute="trailing" id="y0e-nF-4Tm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="notificationsButton" destination="wKA-DV-Q2w" id="Pgc-LP-dZG"/>
+                        <outlet property="sendButton" destination="nAF-eq-wI4" id="4qD-c5-WVR"/>
+                        <outlet property="sendInputButton" destination="Bh9-bV-k4i" id="slq-nC-L14"/>
+                        <outlet property="sendWithoutCategoryButton" destination="pbT-hV-rO4" id="LgD-M3-9S8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

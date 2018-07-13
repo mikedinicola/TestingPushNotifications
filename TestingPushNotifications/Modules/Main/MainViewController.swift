@@ -13,6 +13,9 @@ import CoreLocation
 final class MainViewController: UIViewController {
     
     @IBOutlet var notificationsButton: UIButton!
+    @IBOutlet var sendButton: UIButton!
+    @IBOutlet var sendWithoutCategoryButton: UIButton!
+    @IBOutlet var sendInputButton: UIButton!
     
     let userNotificationCenter = UNUserNotificationCenter.current()
     var deviceTokenLabel: UILabel?
@@ -39,6 +42,52 @@ final class MainViewController: UIViewController {
         }
     }
     
+    func sendNotification(_ category: String? = nil, latitude: Double? = nil, longitude: Double? = nil) {
+        
+        let triggerTime = TimeInterval(2)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: triggerTime, repeats: false)
+        
+        let content = UNMutableNotificationContent()
+        content.body = "Your bike was stolen!"
+        content.sound = .default()
+        
+        if let category = category {
+            content.categoryIdentifier = category
+        }
+        if let latitude = latitude,
+            let longitude = longitude {
+            content.userInfo = [:]
+            content.userInfo[latitude]  = latitude
+            content.userInfo[longitude] = longitude
+        }
+        
+        let uuidString = UUID().uuidString
+        let notif = UNNotificationRequest(identifier: uuidString,
+                                          content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(notif, withCompletionHandler: nil)
+    }
+    
+    @IBAction func sendNotificationTouchUpInside(_ sender: Any) {
+        
+        let latitude = 47.2256013
+        let longitude = -1.5633523
+        
+        sendNotification("notificationCategory", latitude: latitude, longitude: longitude)
+    }
+    
+    @IBAction func sendInputNotificationTouchUpInside(_ sender: Any) {
+        
+        sendNotification("notificationTextInputCategory")
+    }
+    
+    @IBAction func sendNotificationWithoutCategoryTouchUpInside(_ sender: Any) {
+        
+        let latitude = 47.2256013
+        let longitude = -1.5633523
+        
+        sendNotification(latitude: latitude, longitude: longitude)
+    }
+    
     func getNotificationSettings() {
         userNotificationCenter.getNotificationSettings { (settings) in
             guard settings.authorizationStatus == .authorized else { return }
@@ -58,14 +107,6 @@ final class MainViewController: UIViewController {
         case didRegisterWithDeviceTokenNotification:
             guard let deviceToken = notification.object as? String else {
                 return
-            }
-            
-            if deviceTokenLabel == nil {
-                let deviceTokenLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-                deviceTokenLabel.accessibilityIdentifier = "deviceTokenLabel"
-                view.addSubview(deviceTokenLabel)
-                self.deviceTokenLabel = deviceTokenLabel
-                self.deviceTokenLabel?.text = deviceToken
             }
             
         case bikeTheftNotification:
