@@ -7,11 +7,13 @@
 //
 
 import XCTest
+@testable import TestingPushNotifications
 
 final class TestingPushNotificationsUITests: XCTestCase {
     
     let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-        
+    let app = XCUIApplication()
+    
     override func setUp() {
         super.setUp()
         
@@ -23,15 +25,6 @@ final class TestingPushNotificationsUITests: XCTestCase {
         XCUIApplication().launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testTapNotificationWithoutCategory() {
-        let app = XCUIApplication()
         app.launchArguments.append("isRunningUITests")
         app.launch()
         
@@ -40,24 +33,20 @@ final class TestingPushNotificationsUITests: XCTestCase {
         
         let notificationsPermissionButton = app.buttons["notificationsButton"]
         notificationsPermissionButton.tap()
+    }
+    
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+    }
+    
+    func testTapNotificationWithoutCategory() {
         
-        // get the current deviceToken from the app
-        let deviceTokenLabel = app.staticTexts.element(matching: .any, identifier: "deviceTokenLabel")
-        XCTAssert(deviceTokenLabel.waitForExistence(timeout: 10))
-        
-        let deviceToken = deviceTokenLabel.label
+        let sendButton = app.buttons["sendWithoutCategoryButton"]
+        sendButton.tap()
         
         // close app
         XCUIDevice.shared.press(XCUIDevice.Button.home)
-        
-        // trigger red Push Notification
-        let latitude = 47.2256013
-        let longitude = -1.5633523
-        
-        let payload = "{\"aps\":{\"alert\":\"Your bike was stolen!\"}, \"latitude\":\(latitude), \"longitude\":\(longitude)}"
-        triggerPushNotification(
-            withPayload: payload,
-            deviceToken: deviceToken)
         
         let notification = springboard.otherElements["NotificationShortLookView"]
         XCTAssert(notification.waitForExistence(timeout: 10))
@@ -70,34 +59,12 @@ final class TestingPushNotificationsUITests: XCTestCase {
     }
     
     func testTapNotificationActionButton() {
-        let app = XCUIApplication()
-        app.launchArguments.append("isRunningUITests")
-        app.launch()
         
-        // dismiss the system dialog if it pops up
-        allowPushNotificationsIfNeeded(app: app)
-        
-        let notificationsPermissionButton = app.buttons["notificationsButton"]
-        notificationsPermissionButton.tap()
-        
-        // get the current deviceToken from the app
-        let deviceTokenLabel = app.staticTexts.element(matching: .any, identifier: "deviceTokenLabel")
-        XCTAssert(deviceTokenLabel.waitForExistence(timeout: 10))
-        
-        let deviceToken = deviceTokenLabel.label
+        let sendButton = app.buttons["sendButton"]
+        sendButton.tap()
         
         // close app
         XCUIDevice.shared.press(XCUIDevice.Button.home)
-        
-        // trigger red Push Notification
-        let latitude = 47.2256013
-        let longitude = -1.5633523
-        
-        let payload = "{\"aps\":{\"alert\":\"Your bike was stolen!\", \"category\":\"notificationCategory\"}, \"latitude\":\(latitude), \"longitude\":\(longitude)}"
-        
-        triggerPushNotification(
-            withPayload: payload,
-            deviceToken: deviceToken)
         
         let notification = springboard.otherElements["NotificationShortLookView"]
         XCTAssert(notification.waitForExistence(timeout: 10))
@@ -116,34 +83,12 @@ final class TestingPushNotificationsUITests: XCTestCase {
     }
     
     func testTapActionableNotification() {
-        let app = XCUIApplication()
-        app.launchArguments.append("isRunningUITests")
-        app.launch()
         
-        // dismiss the system dialog if it pops up
-        allowPushNotificationsIfNeeded(app: app)
-        
-        let notificationsPermissionButton = app.buttons["notificationsButton"]
-        notificationsPermissionButton.tap()
-        
-        // get the current deviceToken from the app
-        let deviceTokenLabel = app.staticTexts.element(matching: .any, identifier: "deviceTokenLabel")
-        XCTAssert(deviceTokenLabel.waitForExistence(timeout: 10))
-        
-        let deviceToken = deviceTokenLabel.label
+        let sendButton = app.buttons["sendButton"]
+        sendButton.tap()
         
         // close app
         XCUIDevice.shared.press(XCUIDevice.Button.home)
-        
-        // trigger red Push Notification
-        let latitude = 47.2256013
-        let longitude = -1.5633523
-        
-        let payload = "{\"aps\":{\"alert\":\"Your bike was stolen!\", \"category\":\"notificationCategory\"}, \"latitude\":\(latitude), \"longitude\":\(longitude)}"
-        
-        triggerPushNotification(
-            withPayload: payload,
-            deviceToken: deviceToken)
         
         let notification = springboard.otherElements["NotificationShortLookView"]
         XCTAssert(notification.waitForExistence(timeout: 10))
@@ -159,34 +104,12 @@ final class TestingPushNotificationsUITests: XCTestCase {
     }
     
     func testCloseActionbleNotification() {
-        let app = XCUIApplication()
-        app.launchArguments.append("isRunningUITests")
-        app.launch()
         
-        // dismiss the system dialog if it pops up
-        allowPushNotificationsIfNeeded(app: app)
-        
-        let notificationsPermissionButton = app.buttons["notificationsButton"]
-        notificationsPermissionButton.tap()
-        
-        // get the current deviceToken from the app
-        let deviceTokenLabel = app.staticTexts.element(matching: .any, identifier: "deviceTokenLabel")
-        XCTAssert(deviceTokenLabel.waitForExistence(timeout: 10))
-        
-        let deviceToken = deviceTokenLabel.label
+        let sendButton = app.buttons["sendButton"]
+        sendButton.tap()
         
         // close app
-        XCUIDevice.shared.press(XCUIDevice.Button.home)
-        
-        // trigger red Push Notification
-        let latitude = 47.2256013
-        let longitude = -1.5633523
-        
-        let payload = "{\"aps\":{\"alert\":\"Your bike was stolen!\", \"category\":\"notificationCategory\"}, \"latitude\":\(latitude), \"longitude\":\(longitude)}"
-        
-        triggerPushNotification(
-            withPayload: payload,
-            deviceToken: deviceToken)
+        XCUIDevice.shared.press(XCUIDevice.Button.home)                
         
         let notification = springboard.otherElements["NotificationShortLookView"]
         XCTAssert(notification.waitForExistence(timeout: 10))
@@ -199,31 +122,12 @@ final class TestingPushNotificationsUITests: XCTestCase {
     }
     
     func testTextInputActionbleNotification() {
-        let app = XCUIApplication()
-        app.launchArguments.append("isRunningUITests")
-        app.launch()
-        
-        // dismiss the system dialog if it pops up
-        allowPushNotificationsIfNeeded(app: app)
-        
-        let notificationsPermissionButton = app.buttons["notificationsButton"]
-        notificationsPermissionButton.tap()
-        
-        // get the current deviceToken from the app
-        let deviceTokenLabel = app.staticTexts.element(matching: .any, identifier: "deviceTokenLabel")
-        XCTAssert(deviceTokenLabel.waitForExistence(timeout: 10))
-
-        let deviceToken = deviceTokenLabel.label
+       
+        let sendButton = app.buttons["sendInputButton"]
+        sendButton.tap()
 
         // close app
-        XCUIDevice.shared.press(XCUIDevice.Button.home)
-        
-        // trigger red Push Notification
-        let payload = "{\"aps\":{\"alert\":\"You have a message!\", \"category\":\"notificationTextInputCategory\"}}"
-        
-        triggerPushNotification(
-            withPayload: payload,
-            deviceToken: deviceToken)
+        XCUIDevice.shared.press(XCUIDevice.Button.home)                
         
         //Display notification
         let notification = springboard.otherElements["NotificationShortLookView"]
